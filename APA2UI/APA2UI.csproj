@@ -25,10 +25,4 @@
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Attempt">
-      <HintPath>..\..\Attempt\Attempt\bin\Debug\net6.0\Attempt.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

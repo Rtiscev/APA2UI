@@ -12,11 +12,20 @@ namespace APA2UI
 {
     public class WordProc
     {
-        private const string V = "\\";
-
+        private DateTime date;
         public void word(List<object> A, ref List<double> times)
         {
             Sorts sorts = new(0);
+            date = DateTime.Now;
+            var hour = date.Hour;
+            var minute = date.Minute;
+            var second = date.Second;
+
+            var day = date.Day.ToString();
+            var month = date.Month.ToString();
+            var year = date.Year.ToString();
+            var full = $"{day}-{month}-{year} {hour}-{minute}-{second}";
+
 
             int k = 0;
             var Shell_time = System.Diagnostics.Stopwatch.StartNew();
@@ -76,20 +85,26 @@ namespace APA2UI
             #endregion
 
             #region Path Creation
-            string path1 = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + V;
-            string folder = System.IO.Path.Combine(path1, "data" + V);
-            if (!Directory.Exists(folder))
+            string parentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string mainFolder = System.IO.Path.Combine(parentPath, "data");
+            if (!Directory.Exists(mainFolder))
             {
-                System.IO.Directory.CreateDirectory(folder);
+                System.IO.Directory.CreateDirectory(mainFolder);
+            }
+
+            string childFolder = System.IO.Path.Combine(mainFolder, full+"\\");
+            if (!Directory.Exists(childFolder))
+            {
+                System.IO.Directory.CreateDirectory(childFolder);
             }
             #endregion
 
-            Graphs(folder);
+            Graphs(childFolder);
 
-            sorts.InsertImage(folder + "iterations.png");
-            sorts.InsertImage(folder + "Time.png");
+            sorts.InsertImage(childFolder + "iterations.png");
+            sorts.InsertImage(childFolder + "Time.png");
 
-            sorts.Save(folder);
+            sorts.Save(childFolder);
             sorts.Close();
         }
         public void Graphs(string path)
